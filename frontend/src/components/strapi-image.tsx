@@ -27,7 +27,7 @@ export function StrapiImage({
   return (
     <Image
       src={imageUrl ?? imageFallback}
-      alt={alt}
+      alt={alt ?? "no alt text provided"}
       height={height}
       width={width}
       className={className}

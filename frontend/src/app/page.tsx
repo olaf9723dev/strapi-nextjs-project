@@ -42,16 +42,15 @@ async function loader() {
               image: {
                 fields: ["url", "alternativeText", "name"],
               },
-            }
+            },
           },
           "layout.price-grid": {
             populate: {
               priceCard: {
                 populate: "*",
               },
-            }
+            },
           },
-         
         },
       },
     },
@@ -63,19 +62,19 @@ async function loader() {
   return data;
 }
 
-function BlockRenderer(block: Block) {
+function BlockRenderer(block: Block, index: number) {
   console.dir(block.__component, { depth: null });
   switch (block.__component) {
     case "layout.hero":
-      return <Hero key={block.id} {...block} />;
+      return <Hero key={index} {...block} />;
     case "layout.card-grid":
-      return <CardCarousel key={block.id} {...block} />;
+      return <CardCarousel key={index} {...block} />;
     case "layout.section-heading":
-      return <SectionHeading key={block.id} {...block} />;
+      return <SectionHeading key={index} {...block} />;
     case "layout.content-with-image":
-      return <ContentWithImage key={block.id} {...block} />;
+      return <ContentWithImage key={index} {...block} />;
     case "layout.price-grid":
-      return <Pricing key={block.id} {...block} />;
+      return <Pricing key={index} {...block} />;
     default:
       return null;
   }
@@ -85,7 +84,5 @@ export default async function Home() {
   const data = await loader();
   const blocks = data?.data?.blocks;
   if (!blocks) return null;
-  return <div>
-    {blocks ? blocks.map((block: any) => BlockRenderer(block)) : null}
-  </div>;
+  return <div>{blocks ? blocks.map((block: any, index: number) => BlockRenderer(block, index)) : null}</div>;
 }

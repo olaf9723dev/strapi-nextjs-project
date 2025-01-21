@@ -15,10 +15,8 @@ interface StaticParamsProps {
 
 export async function generateStaticParams() {
   const { fetchData } = await import("@/lib/fetch");
-
   const path = "/api/pages";
   const baseUrl = getStrapiURL();
-
   const url = new URL(path, baseUrl);
 
   url.search = qs.stringify({
@@ -81,17 +79,16 @@ async function loader(slug: string) {
   return data;
 }
 
-function BlockRenderer(block: Block) {
-  console.log(block.__component, "From BlockRenderer");
+function BlockRenderer(block: Block, index: number) {
   switch (block.__component) {
     case "layout.hero":
-      return <Hero key={block.id} {...block} />;
+      return <Hero key={index} {...block} />;
     case "layout.card-grid":
-      return <CardGrid key={block.id} {...block} />;
+      return <CardGrid key={index} {...block} />;
     case "layout.section-heading":
-      return <SectionHeading key={block.id} {...block} />;
+      return <SectionHeading key={index} {...block} />;
     case "layout.content-with-image":
-      return <ContentWithImage key={block.id} {...block} />;
+      return <ContentWithImage key={index} {...block} />;
     default:
       return null;
   }
@@ -102,5 +99,5 @@ export default async function PageBySlugRoute({ params }: { params: { slug: stri
   const data = await loader(slug);
   const blocks = data?.data[0]?.blocks;
   if (!blocks) return null;
-  return <div>{blocks ? blocks.map((block: any) => BlockRenderer(block)) : null}</div>;
+  return <div>{blocks ? blocks.map((block: any, index: number) => BlockRenderer(block, index)) : null}</div>;
 }

@@ -28,7 +28,8 @@ export async function GET(request: Request, params: { params: { provider: string
   const res = await fetch(url.href)
   const data = await res.json()
 
-  cookies().set("jwt", data.jwt, config);
+  const cookieStore = await cookies();
+  cookieStore.set("jwt", data.jwt, config);
 
   return NextResponse.redirect(new URL("/dashboard", request.url));
 }
