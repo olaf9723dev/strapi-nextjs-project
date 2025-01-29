@@ -1,28 +1,27 @@
-const fs = require("fs");
-const path = require("path");
+import * as fs from 'fs';
+import * as path from 'path';
 
-function copyEnvFile(targetDir) {
-  // Ensure targetDir is a valid string and trim any whitespace
-  targetDir = typeof targetDir === "string" ? targetDir.trim() : "";
+function copyEnvFile(targetDir: string): void {
+  // Ensure targetDir is trimmed
+  targetDir = targetDir.trim();
 
-  const examplePath = path.join(targetDir, ".env.example");
-  const envPath = path.join(targetDir, ".env");
+  const examplePath: string = path.join(targetDir, ".env.example");
+  const envPath: string = path.join(targetDir, ".env");
 
   console.log("Attempting to copy from:", examplePath);
   console.log("To:", envPath);
-
   // Check if .env.example exists
-  fs.access(examplePath, fs.constants.F_OK, (err) => {
+  fs.access(examplePath, fs.constants.F_OK, (err: Error | null) => {
     if (err) {
       console.error(`.env.example file does not exist in ${targetDir}`);
       return;
     }
 
     // .env.example exists, now check for .env
-    fs.access(envPath, fs.constants.F_OK, (err) => {
+    fs.access(envPath, fs.constants.F_OK, (err: Error | null) => {
       if (err) {
         // .env file does not exist, copy .env.example to .env
-        fs.copyFile(examplePath, envPath, (err) => {
+        fs.copyFile(examplePath, envPath, (err: Error | null) => {
           if (err) {
             console.error("Error occurred:", err);
             return;
@@ -40,7 +39,7 @@ function copyEnvFile(targetDir) {
 }
 
 // Get the directory path from the command line argument and trim whitespace
-const directoryPath = process.argv[2]?.trim();
+const directoryPath: string | undefined = process.argv[2]?.trim();
 
 if (directoryPath) {
   copyEnvFile(directoryPath);

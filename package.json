@@ -1,17 +1,27 @@
 {
+  "name": "strapi-next-starter",
+  "version": "1.0.0",
+  "description": "Strapi starter project with Next.js",
+  "type": "module",
   "scripts": {
-    "frontend": "yarn dev --prefix ../frontend/",
-    "backend": "yarn dev --prefix ../backend/",
-    "setup:frontend": "cd frontend && yarn && node ../copy-env.js ./",
-    "setup:backend": "cd backend && yarn && node ../copy-env.js ./",
-    "setup": "yarn install && yarn setup:frontend && yarn setup:backend && yarn seed",
-    "dev": "yarn concurrently \"cd frontend && yarn dev\" \"cd backend && yarn develop\"",
-    "seed": "cd backend && yarn strapi import -f ../seed-data.tar.gz --force",
-    "export": "cd backend && yarn strapi export --no-encrypt -f ../seed-data",
+    "client": "yarn dev --prefix ../client/",
+    "server": "yarn dev --prefix ../server/",
+    "setup:client": "cd client && yarn && node --loader ts-node/esm ../copy-env.mts ./",
+    "setup:server": "cd server && yarn && node --loader ts-node/esm ../copy-env.mts ./",
+    "setup": "yarn install && yarn setup:client && yarn setup:server",
+    "dev": "yarn concurrently \"cd server && yarn develop\" \"npx wait-on http://localhost:1337 && cd client && yarn dev\"",
+    "seed": "cd server && yarn strapi import -f ../seed-data.tar.gz --force",
+    "export": "cd server && yarn strapi export --no-encrypt -f ../seed-data",
     "repo:upstream": "git fetch upstream && git merge upstream/main"
   },
   "dependencies": {
+    "@types/node": "^22.5.2",
     "concurrently": "^8.2.2",
-    "npm-check-updates": "^16.14.15"
+    "next-auth": "^4.24.10",
+    "typescript": "^5.0.0",
+    "wait-on": "^8.0.1"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2"
   }
 }
