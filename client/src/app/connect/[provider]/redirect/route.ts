@@ -10,23 +10,28 @@ const config = {
   secure: process.env.NODE_ENV === "production",
 };
 
-export const dynamic = 'force-dynamic' // defaults to auto
-export async function GET(request: Request, params: { params: { provider: string } }) {
-  
-  const { searchParams } = new URL(request.url)
-  const token = searchParams.get('access_token')
-  
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ [key: string]: string }> }
+) {
+  const resolvedParams = await params;
+
+  console.log("*****************", resolvedParams, "*****************");
+
+  const { searchParams } = new URL(request.url);
+  const token = searchParams.get("access_token");
+
   if (!token) return NextResponse.redirect(new URL("/", request.url));
-  
-  const provider = params.params.provider
+
+  const provider = resolvedParams.provider;
   const backendUrl = getStrapiURL();
   const path = `/api/auth/${provider}/callback`;
 
   const url = new URL(backendUrl + path);
-  url.searchParams.append('access_token', token)
+  url.searchParams.append("access_token", token);
 
-  const res = await fetch(url.href)
-  const data = await res.json()
+  const res = await fetch(url.href);
+  const data = await res.json();
 
   const cookieStore = await cookies();
   cookieStore.set("jwt", data.jwt, config);

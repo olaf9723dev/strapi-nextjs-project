@@ -10,11 +10,11 @@
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.1.0",
-    "@radix-ui/react-slot": "^1.0.2",
-    "@strapi/sdk-js": "1.0.0-beta.0",
+    "@radix-ui/react-slot": "^1.1.1",
+    "@strapi/sdk-js": "^1.0.0-beta.0",
     "@types/qs": "^6.9.15",
     "add": "^2.0.6",
-    "class-variance-authority": "^0.7.0",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "embla-carousel-react": "^8.1.6",
     "lucide-react": "^0.381.0",
@@ -30,15 +30,11 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/node": "^22.12.0",
-    "@types/react": "^19.0.8",
-    "@types/react-dom": "^19.0.3",
-    "eslint": "^8",
-    "eslint-config-next": "^15.1.5",
-    "eslint-plugin-tailwindcss": "^3.17.0",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
     "postcss": "^8",
-    "prettier": "^3.2.5",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5.7.3"
+    "typescript": "^5"
   }
 }
