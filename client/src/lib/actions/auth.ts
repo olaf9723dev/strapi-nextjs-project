@@ -3,12 +3,7 @@ import { z } from "zod";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-import {
-  registerUserService,
-  loginUserService,
-} from "@/lib/services/auth";
-
-const cookieStore = await cookies();
+import { registerUserService, loginUserService } from "@/lib/services/auth";
 
 const config = {
   maxAge: 60 * 60 * 24 * 7, // 1 week
@@ -66,6 +61,7 @@ export async function registerUserAction(prevState: any, formData: FormData) {
     };
   }
 
+  const cookieStore = await cookies();
   cookieStore.set("jwt", responseData.jwt, config);
   redirect("/dashboard");
 }
@@ -122,12 +118,13 @@ export async function loginUserAction(prevState: any, formData: FormData) {
       message: "Failed to Login.",
     };
   }
-
+  const cookieStore = await cookies();
   cookieStore.set("jwt", responseData.jwt, config);
   redirect("/dashboard");
 }
 
 export async function logoutAction() {
+  const cookieStore = await cookies();
   cookieStore.set("jwt", "", { ...config, maxAge: 0 });
   redirect("/");
 }
