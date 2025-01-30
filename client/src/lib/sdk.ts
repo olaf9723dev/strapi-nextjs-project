@@ -1,5 +1,6 @@
-
-
+import { getStrapiURL } from "@/lib/utils";
 import { strapiSDK } from '@strapi/sdk-js';
-const sdk = strapiSDK({ baseURL: 'http://localhost:1337/api' });
+
+const BASE_API_URL = getStrapiURL() + "/api";
+const sdk = strapiSDK({ baseURL: BASE_API_URL });
 export default sdk;

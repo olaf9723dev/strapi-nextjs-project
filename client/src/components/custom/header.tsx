@@ -2,7 +2,7 @@ import type { NavLink } from "@/types";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import { MobileNavbar } from "@/components/mobile-navbar";
+import { MobileNavbar } from "@/components/custom/mobile-navbar";
 
 interface HeaderProps {
   data: {

@@ -1,7 +1,7 @@
 import React from "react";
 import type { ContentWithImageProps } from "@/types";
 import { cn } from "@/lib/utils";
-import { StrapiImage } from "./strapi-image";
+import { StrapiImage } from "@/components/custom/strapi-image";
 
 
 export default function ContentWithImage(data: Readonly<ContentWithImageProps>) {

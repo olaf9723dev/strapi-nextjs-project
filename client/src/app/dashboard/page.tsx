@@ -1,5 +1,5 @@
 import React from 'react'
-import { LogoutButton } from '@/components/logout-button'
+import { LogoutButton } from '@/components/custom/logout-button'
 
 export default function DashboardRoute() {
   return (

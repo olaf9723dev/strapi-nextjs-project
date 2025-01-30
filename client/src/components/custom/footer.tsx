@@ -65,7 +65,7 @@ export function Footer({ data }: Readonly<FooterProps>) {
   const { text, socialLinks } = data;
   return (
     <footer className="container flex flex-col items-center justify-between gap-6 py-10 sm:flex-row">
-      <p className="text-center text-sm">{text}</p>
+      <p className="text-center text-sm">&copy; {new Date().getFullYear()} {text}</p>
       <div className="flex items-center gap-5">
         {socialLinks &&
           socialLinks.map((link) => (

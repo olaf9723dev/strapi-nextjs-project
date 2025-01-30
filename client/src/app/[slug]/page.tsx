@@ -1,10 +1,6 @@
-import type { Block } from "@/types";
-
-import { Hero } from "@/components/hero";
-import { getAllPagesSlugs, getPageBySlug } from "@/lib/loaders";
-import { CardGrid } from "@/components/card-grid";
-import { SectionHeading } from "@/components/section-heading";
-import ContentWithImage from "@/components/content-with-image";
+import { Hero } from "@/components/blocks/hero";
+import { getAllPagesSlugs, getPageBySlug } from "@/data/loaders";
+import { BlockRenderer } from "@/components/blocks";
 
 export async function generateStaticParams() {
   const pages = await getAllPagesSlugs();
@@ -13,20 +9,6 @@ export async function generateStaticParams() {
   }));
 }
 
-function BlockRenderer(block: Block, index: number) {
-  switch (block.__component) {
-    case "layout.hero":
-      return <Hero key={index} {...block} />;
-    case "layout.card-grid":
-      return <CardGrid key={index} {...block} />;
-    case "layout.section-heading":
-      return <SectionHeading key={index} {...block} />;
-    case "layout.content-with-image":
-      return <ContentWithImage key={index} {...block} />;
-    default:
-      return null;
-  }
-}
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -38,5 +20,5 @@ export default async function PageBySlugRoute({ params }: PageProps) {
   const data = await getPageBySlug(slug);
   const blocks = data?.data[0]?.blocks;
   if (!blocks) return null;
-  return <div>{blocks ? blocks.map((block: any, index: number) => BlockRenderer(block, index)) : null}</div>;
+  return <div>{blocks ? <BlockRenderer blocks={blocks} /> : null}</div>;
 }

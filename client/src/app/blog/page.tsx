@@ -1,51 +1,15 @@
 import Link from "next/link";
-import { StrapiImage } from "@/components/strapi-image";
+import { StrapiImage } from "@/components/custom/strapi-image";
 import { Card, CardContent } from "@/components/ui/card";
-import { Search } from "@/components/search";
-import { PaginationComponent } from "@/components/pagination";
-import { CategorySelect } from "@/components/category-select";
+import { Search } from "@/components/custom/search";
+import { PaginationComponent } from "@/components/custom/pagination";
+import { CategorySelect } from "@/components/custom/category-select";
 import { formatDate } from "@/lib/utils";
-import { getBlogPosts } from "@/lib/loaders";
+import { getBlogPosts } from "@/data/loaders";
 
 interface PageProps {
   searchParams: Promise<{ page?: string; query?: string; category?: string }>
 }
-
-/*
-{
-  id: 6,
-  documentId: 'phsnnk9tf9s9r8lqfn2l1paf',
-  title: 'Top 10 Headless CMS Platforms for 2024',
-  description: 'An in-depth look at the top headless CMS platforms available in 2024, highlighting their features, benefits, and use cases.',
-  slug: 'top-10-headless-cms-platforms-for-2024',
-  content: 'As businesses continue to demand more flexibility and scalability from their CMS, headless CMS platforms have risen in popularity. Here are the top 10 headless CMS platforms for 2024:\n' +
-    '\n' +
-    '1. **Strapi**: An open-source headless CMS that is highly customizable and developer-friendly.\n' +
-    '2. **Contentful**: Known for its robust API and flexibility, making it a top choice for enterprises.\n' +
-    '3. **Sanity**: Offers real-time collaboration and a flexible content model.\n' +
-    '4. **Ghost**: Ideal for publishers and content-driven websites.\n' +
-    '5. **DatoCMS**: Provides a user-friendly interface and powerful API.\n' +
-    '6. **ButterCMS**: Features a simple setup and easy-to-use dashboard.\n' +
-    '7. **Prismic**: Offers a unique approach to content modeling and API.\n' +
-    '8. **Kentico Kontent**: A cloud-based CMS with strong support for marketing and IT.\n' +
-    '9. **Agility CMS**: Combines headless CMS features with a traditional CMS experience.\n' +
-    '10. **GraphCMS**: Provides a GraphQL-based API for efficient content management.\n' +
-    '\n' +
-    '### Conclusion\n' +
-    'Each of these platforms offers unique features and benefits, making them suitable for different use cases. By understanding your specific needs, you can choose the right headless CMS that will enhance your content management and delivery process.\n',
-  createdAt: '2024-07-20T15:43:09.851Z',
-  updatedAt: '2024-08-20T15:30:40.625Z',
-  publishedAt: '2024-08-20T15:30:40.631Z',
-  image: {
-    id: 5,
-    documentId: 'qjkxg3iq4ztgx6a5d5x4p3dv',
-    url: '/uploads/pexels_cottonbro_4855369_3580aa2279.jpg',
-    alternativeText: null,
-    name: 'pexels-cottonbro-4855369.jpg'
-  },
-  category: { id: 2, documentId: 'ml0rzwifz6gej5kmpgh3no1b', text: 'tech' }
-}
-*/
 
 interface PostProps {
   id: number;
@@ -95,7 +59,6 @@ export default async function BlogRoute({ searchParams }: PageProps) {
       <div className="mt-6 grid auto-rows-fr grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3">
         {posts &&
           posts.map((item: PostProps) => {
-            console.log(item);
             return (
               <Link href={"/blog/" + item.slug} key={item.documentId}>
                 <Card className="h-full shadow-lg border-none">

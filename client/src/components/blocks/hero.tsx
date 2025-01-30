@@ -4,12 +4,11 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { StrapiImage } from "./strapi-image";
+import { StrapiImage } from "@/components/custom/strapi-image";
 
 export function Hero(data: Readonly<HeroProps>) {
   if (!data) return null;
   const { heading, text, topLink, buttonLink, image } = data;
-  console.log(topLink, "Top Link");
   return (
     <section className="container flex flex-col items-center gap-10 pb-28 pt-20 sm:gap-14 md:flex-row">
       <div className="flex flex-1 flex-col items-center gap-8 md:items-start md:gap-10">

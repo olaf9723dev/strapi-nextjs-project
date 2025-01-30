@@ -1,6 +1,20 @@
 import sdk from "@/lib/sdk";
 const PAGE_SIZE = 3;
 
+export async function getGlobalPageData() {
+  const landingPage = await sdk.single("global").find({
+    populate: {
+      topNav: {
+        populate: "*",
+      },
+      footer: {
+        populate: "*",
+      },
+    },
+  });
+  return landingPage;
+}
+
 export async function getLandingPage() {
   const landingPage = await sdk.single("landing-page").find({
     populate: {
@@ -44,11 +58,6 @@ export async function getLandingPage() {
     },
   });
   return landingPage;
-}
-
-export async function getAllPages() {
-  const pages = await sdk.collection("pages").find();
-  return pages;
 }
 
 export async function getAllPagesSlugs() {
@@ -97,6 +106,13 @@ export async function getPageBySlug(slug: string) {
     },
   });
   return page;
+}
+
+export async function getCategories() {
+  const categories = await sdk.collection("categories").find({
+    fields: ["text", "description"],
+  });
+  return categories;
 }
 
 export async function getBlogPostBySlug(slug: string) {
