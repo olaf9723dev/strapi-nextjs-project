@@ -8,6 +8,8 @@ import {
   loginUserService,
 } from "@/lib/services/auth";
 
+const cookieStore = await cookies();
+
 const config = {
   maxAge: 60 * 60 * 24 * 7, // 1 week
   path: "/",
@@ -64,7 +66,7 @@ export async function registerUserAction(prevState: any, formData: FormData) {
     };
   }
 
-  cookies().set("jwt", responseData.jwt, config);
+  cookieStore.set("jwt", responseData.jwt, config);
   redirect("/dashboard");
 }
 
@@ -121,11 +123,11 @@ export async function loginUserAction(prevState: any, formData: FormData) {
     };
   }
 
-  cookies().set("jwt", responseData.jwt);
+  cookieStore.set("jwt", responseData.jwt, config);
   redirect("/dashboard");
 }
 
 export async function logoutAction() {
-  cookies().set("jwt", "", { ...config, maxAge: 0 });
+  cookieStore.set("jwt", "", { ...config, maxAge: 0 });
   redirect("/");
 }

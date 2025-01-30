@@ -1,52 +1,31 @@
-import React from "react";
-import qs from "qs";
+
 import { Metadata } from "next";
-import { formatDate, getStrapiURL } from "@/lib/utils";
+import { formatDate } from "@/lib/utils";
 import { MarkdownText } from "@/components/markdown-text";
 import { StrapiImage } from "@/components/strapi-image";
+import { getBlogPostBySlug } from "@/lib/loaders";
 
-interface Props {
-  params: {
-    slug: string;
-  };
+
+interface PageProps {
+  params: Promise<{ slug: string }>
 }
 
 
-
-async function loader(slug: string) {
-  const { fetchData } = await import("@/lib/fetch");
-  const path = "/api/posts";
-  const baseUrl = getStrapiURL();
-
-  const url = new URL(path, baseUrl);
-  url.search = qs.stringify({
-    populate: {
-      image: {
-        fields: ["url", "alternativeText", "name"],
-      },
-      category: {
-        fields: ["text"],
-      },
-    },
-    filters: {
-      slug: { $eq: slug },
-    },
-  });
-  const data = await fetchData(url.href);
-  return data;
-}
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const data = await loader(params.slug);
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const resolveParams = await params;
+  const slug = await resolveParams?.slug;
+  const data = await getBlogPostBySlug(slug);
   const { title, description } = data?.data[0];
-  console.log(title, description);
+  
   return {
     title: title,
     description: description,
   };
 }
-export default async function SinglePost({ params }: Props) {
-  const data = await loader(params.slug);
+export default async function SinglePost({ params }: PageProps) {
+  const resolveParams = await params;
+  const slug = await resolveParams?.slug;
+  const data = await getBlogPostBySlug(slug);
   const post = data?.data[0];
   if (!post) return null;
 

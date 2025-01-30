@@ -3,7 +3,7 @@ import { getStrapiMedia } from "@/lib/utils";
 
 interface StrapiImageProps {
   src: string;
-  alt: string;
+  alt: string | null;
   height?: number;
   width?: number;
   className?: string;
