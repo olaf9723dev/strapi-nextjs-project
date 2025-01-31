@@ -67,7 +67,7 @@ export async function getAllPagesSlugs() {
   return pages;
 }
 
-export async function getPageBySlug(slug: string) {
+export async function getPageBySlug(slug: string, status: string) {
   const page = await sdk.collection("pages").find({
     populate: {
       blocks: {
@@ -104,6 +104,7 @@ export async function getPageBySlug(slug: string) {
     filters: {
       slug: slug,
     },
+    status: status as "draft" | "published" | undefined,
   });
   return page;
 }

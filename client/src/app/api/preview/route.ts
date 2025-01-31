@@ -8,6 +8,11 @@ function getPreviewPath(contentType: string | undefined, slug: string | null, lo
     if (contentType === 'post' || contentType.includes('posts')) {
       return slug ? '/blog/' + slug : '/blog';
     }
+
+    if (contentType === 'page' || contentType.includes('pages')) {
+      return slug ? '/' + slug : '/';
+    }
+
     return '/' + contentType;
   })();
 

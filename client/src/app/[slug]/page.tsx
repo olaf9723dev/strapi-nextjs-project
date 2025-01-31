@@ -1,4 +1,5 @@
-import { Hero } from "@/components/blocks/hero";
+
+import { draftMode } from "next/headers";
 import { getAllPagesSlugs, getPageBySlug } from "@/data/loaders";
 import { BlockRenderer } from "@/components/blocks";
 
@@ -17,7 +18,11 @@ interface PageProps {
 export default async function PageBySlugRoute({ params }: PageProps) {
   const resolveParams = await params;
   const slug = await resolveParams?.slug;
-  const data = await getPageBySlug(slug);
+
+  const { isEnabled: isDraftMode } = await draftMode();
+  const status = isDraftMode ? "draft" : "published";
+  
+  const data = await getPageBySlug(slug, status);
   const blocks = data?.data[0]?.blocks;
   if (!blocks) return null;
   return <div>{blocks ? <BlockRenderer blocks={blocks} /> : null}</div>;
