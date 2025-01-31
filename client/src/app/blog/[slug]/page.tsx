@@ -1,5 +1,6 @@
-
 import { Metadata } from "next";
+import { draftMode } from "next/headers";
+import { notFound } from "next/navigation";
 import { formatDate } from "@/lib/utils";
 import { MarkdownText } from "@/components/blocks/markdown-text";
 import { StrapiImage } from "@/components/custom/strapi-image";
@@ -14,20 +15,33 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const resolveParams = await params;
   const slug = await resolveParams?.slug;
-  const data = await getBlogPostBySlug(slug);
-  const { title, description } = data?.data[0];
+  const { isEnabled: isDraftMode } = await draftMode();
+  const status = isDraftMode ? "draft" : "published";
   
+  const data = await getBlogPostBySlug(slug, status);
+
+  if (!data?.data?.[0]) {
+    return { title: 'Next.js Strapi Preview', description: 'Next.js Strapi Preview' };
+  }
+  
+  const post = data.data[0];
+
   return {
-    title: title,
-    description: description,
+    title: post.title,
+    description: post.description,
   };
 }
+
 export default async function SinglePost({ params }: PageProps) {
+
   const resolveParams = await params;
   const slug = await resolveParams?.slug;
-  const data = await getBlogPostBySlug(slug);
+  const { isEnabled: isDraftMode } = await draftMode();
+  const status = isDraftMode ? "draft" : "published";
+  const data = await getBlogPostBySlug(slug, status);
   const post = data?.data[0];
-  if (!post) return null;
+
+  if (!post) notFound();
 
   return (
     <article>

@@ -115,7 +115,7 @@ export async function getCategories() {
   return categories;
 }
 
-export async function getBlogPostBySlug(slug: string) {
+export async function getBlogPostBySlug(slug: string, status: string) {
   const post = await sdk.collection("posts").find({
     populate: {
       image: {
@@ -128,12 +128,17 @@ export async function getBlogPostBySlug(slug: string) {
     filters: {
       slug: { $eq: slug },
     },
+    status: status as "draft" | "published" | undefined,
   });
   return post;
 }
 
 // TODO: FIX THE SEARCH QUERY
-export async function getBlogPosts(page: number, queryString: string, category: string) {
+export async function getBlogPosts(
+  page: number,
+  queryString: string,
+  category: string
+) {
   const posts = await sdk.collection("posts").find({
     populate: {
       image: {
@@ -143,16 +148,34 @@ export async function getBlogPosts(page: number, queryString: string, category: 
         fields: ["text"],
       },
     },
+
+    // _q: queryString,
+
+    // filters: {
+    //   $or: [
+    //     { title: { $containsi: queryString } },
+    //     { description: { $containsi: queryString } },
+    //     { content: { $containsi: queryString } },
+    //   ],
+    //   ...(category && { category: { text: { $eq: category } } }),
+    // },
+
     filters: {
-      category: category.length !== 0 ? { text: { $eq: category } } : {},
-      ...(queryString.length !== 0 ? { title: { $containsi: queryString } } : {}),
-      // $or: [
-      //   { title: { $containsi: queryString } },
-      //   { description: { $containsi: queryString } },
-      //   { content: { $containsi: queryString } },
-      // ],
-    
+      title: { $containsi: queryString },
+      ...(category && { category: { text: { $eq: category } } }),
     },
+    // filters: {
+    //   category: category.length !== 0 ? { text: { $eq: category } } : {},
+    //   ...(queryString.length !== 0 ? { title: { $containsi: queryString } } : {}),
+
+    //   $or: [
+    //     { text: { $eq: category } },
+    //     { title: { $containsi: queryString } },
+    //     { description: { $containsi: queryString } },
+    //     { content: { $containsi: queryString } },
+    //   ],
+
+    // },
 
     pagination: {
       pageSize: PAGE_SIZE,
