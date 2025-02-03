@@ -10,6 +10,10 @@ const nextConfig: NextConfig = {
         port: "1337",
         pathname: "/uploads/**/*",
       },
+      {
+        protocol: "https",
+        hostname: "motivated-health-e41c7505c5.media.strapiapp.com",
+      },
     ],
   },
 };
