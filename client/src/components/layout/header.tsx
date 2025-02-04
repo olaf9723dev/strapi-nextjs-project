@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { MobileNavbar } from "@/components/custom/mobile-navbar";
-
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 interface HeaderProps {
   data: {
     logoText: string;
@@ -32,17 +32,16 @@ export function Header({ data }: Readonly<HeaderProps>) {
       </Link>
       <div className="flex items-center gap-10">
         <nav className="hidden items-center gap-10 md:flex justify-end">
-          {navItems &&
-            navItems.map((item) => (
-              <Link
-                href={item.href}
-                className="flex cursor-pointer items-center text-lg font-medium text-muted-foreground transition-colors hover:text-foreground sm:text-sm"
-                key={item.text}
-                target={item.isExternal ? "_blank" : "_self"}
-              >
-                {item.text}
-              </Link>
-            ))}
+          {navItems?.map((item) => (
+            <Link
+              href={item.href}
+              className="flex cursor-pointer items-center text-lg font-medium text-muted-foreground transition-colors hover:text-foreground sm:text-sm"
+              key={item.text}
+              target={item.isExternal ? "_blank" : "_self"}
+            >
+              {item.text}
+            </Link>
+          ))}
         </nav>
         {cta && (
           <div className="hidden items-center gap-2 md:flex">
@@ -57,20 +56,20 @@ export function Header({ data }: Readonly<HeaderProps>) {
             </Button>
           </div>
         )}
+        <ThemeToggle />
       </div>
       <MobileNavbar>
         <div className="rounded-b-lg bg-background py-4 container text-foreground shadow-xl">
           <nav className="flex flex-col gap-1 pt-2">
-            {navItems &&
-              navItems.map((item) => (
-                <Link
-                  key={item.text}
-                  href={item.href}
-                  className="flex w-full cursor-pointer items-center rounded-md p-2 font-medium text-muted-foreground hover:text-foreground"
-                >
-                  {item.text}
-                </Link>
-              ))}
+            {navItems?.map((item) => (
+              <Link
+                key={item.text}
+                href={item.href}
+                className="flex w-full cursor-pointer items-center rounded-md p-2 font-medium text-muted-foreground hover:text-foreground"
+              >
+                {item.text}
+              </Link>
+            ))}
 
             {cta && (
               <Button asChild size="lg" className="mt-2 w-full">
@@ -83,6 +82,7 @@ export function Header({ data }: Readonly<HeaderProps>) {
                 </Link>
               </Button>
             )}
+            <ThemeToggle />
           </nav>
         </div>
       </MobileNavbar>

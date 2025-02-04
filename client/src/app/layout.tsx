@@ -2,11 +2,10 @@ import "./globals.css";
 
 import type { Metadata } from "next";
 import { Inter, Nunito } from "next/font/google";
-
+import { ThemeProvider } from "next-themes";
 import { cn } from "@/lib/utils";
-
-import { Header } from "@/components/custom/header";
-import { Footer } from "@/components/custom/footer";
+import { notFound } from "next/navigation";
+import { Header, Footer } from "@/components/layout";
 import { getGlobalPageData } from "@/data/loaders";
 
 const fontSans = Inter({
@@ -31,10 +30,12 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const data = await getGlobalPageData();
-  const { topNav, footer } = data?.data;
+  if (!data) notFound();
+
+  const { topNav, footer } = data.data;
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
           "min-h-screen font-sans antialiased",
@@ -42,9 +43,16 @@ export default async function RootLayout({
           fontHeading.variable
         )}
       >
-        <Header data={topNav}/>
-        {children}
-        <Footer data={footer}/>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Header data={topNav}/>
+          {children}
+          <Footer data={footer}/>
+        </ThemeProvider>
       </body>
     </html>
   );
