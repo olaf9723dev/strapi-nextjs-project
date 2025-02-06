@@ -14,6 +14,7 @@ export default [
             "blob:",
             "market-assets.strapi.io",
             "https://www.youtube.com",
+            "motivated-health-e41c7505c5.media.strapiapp.com",
           ],
           "media-src": [
             "'self'",
@@ -21,6 +22,7 @@ export default [
             "blob:",
             "market-assets.strapi.io",
             "https://www.youtube.com",
+            "motivated-health-e41c7505c5.media.strapiapp.com",
           ],
           "frame-src": ["'self'", "https://www.youtube.com"],
           upgradeInsecureRequests: null,
@@ -28,15 +30,7 @@ export default [
       },
     },
   },
-  {
-    name: "strapi::cors",
-    config: {
-      origin: ["http://localhost:3000", "https://www.youtube.com"],
-      methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"],
-      headers: ["Content-Type", "Authorization", "Origin", "Accept"],
-      keepHeaderOnError: true,
-    },
-  },
+  "strapi::cors",
   "strapi::poweredBy",
   "strapi::query",
   "strapi::body",
