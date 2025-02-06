@@ -1,10 +1,11 @@
 import type { Block } from "@/types";
-
 import { Hero } from "@/components/blocks/hero";
 import { SectionHeading } from "@/components/blocks/section-heading";
 import ContentWithImage from "@/components/blocks/content-with-image";
 import { Pricing } from "@/components/blocks/pricing";
 import { CardCarousel } from "@/components/blocks/card-carousel";
+import { Video } from "@/components/blocks/video";
+import { Text } from "@/components/blocks/text";
 
 function blockRenderer(block: Block, index: number) {
   switch (block.__component) {
@@ -18,6 +19,10 @@ function blockRenderer(block: Block, index: number) {
       return <ContentWithImage key={index} {...block} />;
     case "layout.price-grid":
       return <Pricing key={index} {...block} />;
+    case "blocks.video":
+      return <Video key={index} {...block} />;
+    case "blocks.text":
+      return <Text key={index} {...block} />;
     default:
       return null;
   }
@@ -26,3 +31,5 @@ function blockRenderer(block: Block, index: number) {
 export function BlockRenderer({ blocks }: { blocks: Block[] }) {
   return blocks.map((block, index) => blockRenderer(block, index));
 }
+
+

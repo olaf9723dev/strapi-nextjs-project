@@ -125,6 +125,16 @@ export async function getBlogPostBySlug(slug: string, status: string) {
       category: {
         fields: ["text"],
       },
+      blocks: {
+        on: {
+          "blocks.video": {
+            populate: "*",
+          },
+          "blocks.text": {
+            populate: "*",
+          },
+        },
+      },
     },
     filters: {
       slug: { $eq: slug },
