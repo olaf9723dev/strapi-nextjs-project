@@ -2,28 +2,31 @@ import { Metadata } from "next";
 import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 import { formatDate } from "@/lib/utils";
-import { MarkdownText } from "@/components/blocks/markdown-text";
+import { MarkdownText } from "@/components/custom/markdown-text";
 import { StrapiImage } from "@/components/custom/strapi-image";
 import { getBlogPostBySlug } from "@/data/loaders";
-
-
+import { BlockRenderer } from "@/components/blocks";
 interface PageProps {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string }>;
 }
 
-
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const resolveParams = await params;
   const slug = await resolveParams?.slug;
   const { isEnabled: isDraftMode } = await draftMode();
   const status = isDraftMode ? "draft" : "published";
-  
+
   const data = await getBlogPostBySlug(slug, status);
 
   if (!data?.data?.[0]) {
-    return { title: 'Next.js Strapi Preview', description: 'Next.js Strapi Preview' };
+    return {
+      title: "Next.js Strapi Preview",
+      description: "Next.js Strapi Preview",
+    };
   }
-  
+
   const post = data.data[0];
 
   return {
@@ -33,7 +36,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function SinglePost({ params }: PageProps) {
-
   const resolveParams = await params;
   const slug = await resolveParams?.slug;
   const { isEnabled: isDraftMode } = await draftMode();
@@ -43,11 +45,17 @@ export default async function SinglePost({ params }: PageProps) {
 
   if (!post) notFound();
 
+  const blocks = post?.blocks || [];
+
+  console.log(blocks, "blocks");
+
   return (
     <article>
       <div>
         <header className="container mx-auto my-10">
-          <h1 className="text-6xl font-bold tracking-tighter sm:text-5xl mb-4">{post.title}</h1>
+          <h1 className="text-6xl font-bold tracking-tighter sm:text-5xl mb-4">
+            {post.title}
+          </h1>
           <p className="text-muted-foreground">
             Posted on {formatDate(post.publishedAt)} - {post.category.text}
           </p>
@@ -62,9 +70,17 @@ export default async function SinglePost({ params }: PageProps) {
         </header>
       </div>
 
-      <div className="container mx-auto max-w-4xl text-base leading-7">
-        <MarkdownText content={post.content} />
-      </div>
+      {post.content && (
+        <div className="container mx-auto max-w-4xl text-base leading-7">
+          <MarkdownText content={post.content} />
+        </div>
+      )}
+
+      {blocks && (
+        <div className="container mx-auto max-w-4xl text-base leading-7">
+          <BlockRenderer blocks={blocks} />
+        </div>
+      )}
     </article>
   );
 }

@@ -43,9 +43,12 @@
       "repeatable": false,
       "component": "shared.seo"
     },
-    "video": {
-      "type": "customField",
-      "customField": "plugin::strapi-plugin-yt-clips.strapi-plugin-yt-clips"
+    "blocks": {
+      "type": "dynamiczone",
+      "components": [
+        "blocks.video",
+        "blocks.text"
+      ]
     }
   }
 }
