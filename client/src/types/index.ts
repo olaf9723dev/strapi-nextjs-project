@@ -31,7 +31,7 @@ export interface NavLink {
   isPrimary: boolean;
 }
 
-export type Block = HeroProps | CardGridProps | SectionHeadingProps | ContentWithImageProps | PriceGridProps | YouTubePlayerProps;
+export type Block = HeroProps | CardGridProps | SectionHeadingProps | ContentWithImageProps | PriceGridProps | VideoProps | TextProps;
 
 export interface HeroProps extends Base<"layout.hero"> {
   heading: string;
