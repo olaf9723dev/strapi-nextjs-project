@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { StrapiImage } from "@/components/custom/strapi-image";
 
 
-export default function ContentWithImage(data: Readonly<ContentWithImageProps>) {
+export function ContentWithImage(data: Readonly<ContentWithImageProps>) {
   if (!data ) return null;
   const { reverse, image, heading, subHeading, text } = data;
   const revereStyle = reverse ? "md:flex-row-reverse" : "md:flex-row";

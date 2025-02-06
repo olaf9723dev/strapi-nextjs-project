@@ -128,7 +128,11 @@ export async function getBlogPostBySlug(slug: string, status: string) {
       blocks: {
         on: {
           "blocks.video": {
-            populate: "*",
+            populate: {
+              image: {
+                fields: ["url", "alternativeText", "name"],
+              },
+            },
           },
           "blocks.text": {
             populate: "*",

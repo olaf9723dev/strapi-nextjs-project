@@ -5,7 +5,7 @@ import { formatDate } from "@/lib/utils";
 import { MarkdownText } from "@/components/custom/markdown-text";
 import { StrapiImage } from "@/components/custom/strapi-image";
 import { getBlogPostBySlug } from "@/data/loaders";
-import { BlockRenderer } from "@/components/blocks";
+import { BlockRenderer } from "@/components/block-renderer";
 interface PageProps {
   params: Promise<{ slug: string }>;
 }

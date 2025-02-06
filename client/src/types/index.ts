@@ -5,13 +5,13 @@ type Image = {
   url: string;
   alternativeText: string | null;
   name: string;
-}
+}   
 
 type ComponentType =
   | "layout.hero"
   | "layout.card-grid"
   | "layout.section-heading"
-  | "layout.content-with-image"
+  | "layout.content-with-image"   
   | "layout.price-grid"
   | "blocks.video"
   | "blocks.text";

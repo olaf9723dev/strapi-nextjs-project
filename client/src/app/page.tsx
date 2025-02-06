@@ -1,5 +1,5 @@
 import { getLandingPage } from "@/data/loaders";
-import { BlockRenderer } from "@/components/blocks";
+import { BlockRenderer } from "@/components/block-renderer";
 
 export default async function Home() {
   const data = await getLandingPage();

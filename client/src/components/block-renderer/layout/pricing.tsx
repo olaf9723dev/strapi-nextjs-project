@@ -25,13 +25,12 @@ export function Pricing(data: Readonly<PriceGridProps>) {
                   <span className="text-sm"> /month</span>
                 </div>
                 <ul className="space-y-2 mt-9">
-                  {feature &&
-                    feature.map((item) => (
-                      <li className="flex items-center gap-2" key={item.id}>
-                        <Check size={20} className="text-primary" />
-                        <span className="text-sm text-muted-foreground">{item.description}</span>
-                      </li>
-                    ))}
+                  {feature?.map((item) => (
+                    <li className="flex items-center gap-2" key={item.id}>
+                      <Check size={20} className="text-primary" />
+                      <span className="text-sm text-muted-foreground">{item.description}</span>
+                    </li>
+                  ))}
                 </ul>
                 <Button size="lg" asChild className="mt-10 w-full">
                   <Link href={link.href}>{link.text}</Link>

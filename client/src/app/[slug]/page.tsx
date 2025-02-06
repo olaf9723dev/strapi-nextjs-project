@@ -1,7 +1,7 @@
 
 import { draftMode } from "next/headers";
 import { getAllPagesSlugs, getPageBySlug } from "@/data/loaders";
-import { BlockRenderer } from "@/components/blocks";
+import { BlockRenderer } from "@/components/block-renderer";
 
 export async function generateStaticParams() {
   const pages = await getAllPagesSlugs();

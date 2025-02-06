@@ -1,11 +1,13 @@
 import type { Block } from "@/types";
-import { Hero } from "@/components/blocks/hero";
-import { SectionHeading } from "@/components/blocks/section-heading";
-import ContentWithImage from "@/components/blocks/content-with-image";
-import { Pricing } from "@/components/blocks/pricing";
-import { CardCarousel } from "@/components/blocks/card-carousel";
-import { Video } from "@/components/blocks/video";
-import { Text } from "@/components/blocks/text";
+
+import { Hero } from "@/components/block-renderer/layout/hero";
+import { SectionHeading } from "@/components/block-renderer/layout/section-heading";
+import { ContentWithImage } from "@/components/block-renderer/layout/content-with-image";
+import { Pricing } from "@/components/block-renderer/layout/pricing";
+import { CardCarousel } from "@/components/block-renderer/layout/card-carousel";
+
+import { Video } from "@/components/block-renderer/blocks/video";
+import { Text } from "@/components/block-renderer/blocks/text";
 
 function blockRenderer(block: Block, index: number) {
   switch (block.__component) {
@@ -31,5 +33,3 @@ function blockRenderer(block: Block, index: number) {
 export function BlockRenderer({ blocks }: { blocks: Block[] }) {
   return blocks.map((block, index) => blockRenderer(block, index));
 }
-
-
